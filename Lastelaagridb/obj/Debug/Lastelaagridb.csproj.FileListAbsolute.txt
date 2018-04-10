@@ -1,0 +1,6 @@
+C:\Users\artix\source\repos\DLL2Shabunov\Lastelaagridb\bin\Debug\ClassLibrary.dll
+C:\Users\artix\source\repos\DLL2Shabunov\Lastelaagridb\bin\Debug\ClassLibrary.pdb
+C:\Users\artix\source\repos\DLL2Shabunov\Lastelaagridb\obj\Debug\Lastelaagridb.csproj.CoreCompileInputs.cache
+C:\Users\artix\source\repos\DLL2Shabunov\Lastelaagridb\obj\Debug\ClassLibrary.dll
+C:\Users\artix\source\repos\DLL2Shabunov\Lastelaagridb\obj\Debug\ClassLibrary.pdb
+C:\Users\artix\source\repos\DLL2Shabunov\Lastelaagridb\obj\Debug\Lastelaagridb.csprojResolveAssemblyReference.cache

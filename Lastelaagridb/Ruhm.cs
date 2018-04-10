@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Lastelaagridb
 {
-    public class Class1
+    public class Ruhm
     {
+        public int ID { get; set; }
+        public String NimiRuhm { get; set; }
+        public Ruhm() { }
+
     }
 }
