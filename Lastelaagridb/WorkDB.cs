@@ -181,62 +181,62 @@ namespace Lastelaagridb
         
         public static int DeleteRuhm(int id)
         {
+            int arv = 1;
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "DELETE * FROM group WHERE [ID] = @id";
-                cmd.Parameters.Add("@id", OleDbType.Integer).Value = id;
+                conn.Open();
+                OleDbCommand cmd = new OleDbCommand("DELETE * FROM [group] WHERE ID =" + id, conn);
                 try
                 {
                     cmd.ExecuteNonQuery();
                 }
                 catch
                 {
-                    return 0;
+                    arv = 0;
                 }
+
             }
-                return 1;
+            return arv;
         }
 
         public static int DeleteStudent(int id)
         {
+            int arv = 1;
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "DELETE * FROM student WHERE [ID] = @id";
-                cmd.Parameters.Add("@id", OleDbType.Integer).Value = id;
+                conn.Open();
+                OleDbCommand cmd = new OleDbCommand("DELETE * FROM student WHERE ID = " + id, conn);
                 try
                 {
                     cmd.ExecuteNonQuery();
                 }
                 catch
                 {
-                    return 0;
+                    arv = 0;
                 }
+
             }
-            return 1;
+            return arv;
         }
 
         public static int DeleteTeacher(int id)
         {
+            int arv = 1;
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "DELETE * FROM teacher WHERE [ID] = @id";
-                cmd.Parameters.Add("@id", OleDbType.Integer).Value = id;
+                conn.Open();
+                OleDbCommand cmd = new OleDbCommand("DELETE FROM teacher WHERE ID = " + id, conn);
                 try
                 {
                     cmd.ExecuteNonQuery();
                 }
                 catch
                 {
-                    return 0;
+                    arv = 0;
                 }
+
             }
-            return 1;
+            return arv;
         }
 
         public static int UpdateStudent(Student student)
