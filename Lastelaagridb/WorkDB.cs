@@ -28,7 +28,7 @@ namespace Lastelaagridb
                         Ruhm ruhm = new Ruhm();
                         student.ID = (int)reader[0];
                         student.Nimi = reader[1].ToString();
-                        student.Isikukood = (int)reader[2];
+                        student.Isikukood = reader[2].ToString();
                         student.Kool = reader[3].ToString();
                         student.Klass = (int)reader[4];
                         student.Telefon = reader[5].ToString();
@@ -85,9 +85,9 @@ namespace Lastelaagridb
                         Ruhm ruhm = new Ruhm();
                         teacher.ID = (int)reader[0];
                         teacher.Nimi = reader[1].ToString();
-                        teacher.Isikukood = (int)reader[2];
-                        teacher.Telefon = reader[5].ToString();
-                        teacher.Aadress = reader[6].ToString();
+                        teacher.Isikukood = reader[2].ToString();
+                        teacher.Telefon = reader[3].ToString();
+                        teacher.Aadress = reader[4].ToString();
                         teacher.Ruhm = ruhm.ID;
                         teachers.Add(teacher);
                     }
@@ -99,6 +99,7 @@ namespace Lastelaagridb
 
         public static int InsertNewStudent(Student student)
         {
+            int arv = 1;
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
                 OleDbCommand cmd = new OleDbCommand();
@@ -119,12 +120,12 @@ namespace Lastelaagridb
                 }
                 catch
                 {
-                    return 0;
+                    arv = 0;
                 }
 
 
             }
-                return 1;
+            return arv;
         }
         public static int InsertNewTeacher(Teacher teacher)
         {
@@ -239,13 +240,13 @@ namespace Lastelaagridb
             return arv;
         }
 
-        public static int UpdateStudent(Student student)
+        public static int UpdateStudent(Student student, int id)
         {
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
                 OleDbCommand cmd = new OleDbCommand();
                 cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "UPDATE student SET Nimi = @nimi, Isikukood=@isikukood, @Kool = kool, Klass = @klass, Telefon = @telefon, Aadress = @aadress, Ruhm = @ruhm";
+                cmd.CommandText = "UPDATE student SET Nimi = @nimi, Isikukood= @isikukood, Kool = @kool, Klass = @klass, Telefon = @telefon, Aadress = @aadress, Ruhm = @ruhm WHERE ID = @id";
                 cmd.Parameters.AddWithValue("@nimi", student.Nimi);
                 cmd.Parameters.AddWithValue("@isikukood", student.Isikukood);
                 cmd.Parameters.AddWithValue("@kool", student.Kool);
@@ -253,6 +254,7 @@ namespace Lastelaagridb
                 cmd.Parameters.AddWithValue("@telefon", student.Telefon);
                 cmd.Parameters.AddWithValue("@aadress", student.Aadress);
                 cmd.Parameters.AddWithValue("@ruhm", student.Ruhm);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
                 try
@@ -267,18 +269,19 @@ namespace Lastelaagridb
             return 1;
         }
 
-        public static int UpdateTeacher(Teacher teacher)
+        public static int UpdateTeacher(Teacher teacher, int id)
         {
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
                 OleDbCommand cmd = new OleDbCommand();
                 cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "UPDATE student SET Nimi = @nimi, Isikukood=@isikukood, Telefon = @telefon, Aadress = @aadress, Ruhm = @ruhm";
+                cmd.CommandText = "UPDATE teacher SET Nimi = @nimi, Isikukood= @isikukood, Telefon = @telefon, Aadress = @aadress, Ruhm = @ruhm WHERE ID = @id";
                 cmd.Parameters.AddWithValue("@nimi", teacher.Nimi);
                 cmd.Parameters.AddWithValue("@isikukood", teacher.Isikukood);
                 cmd.Parameters.AddWithValue("@telefon", teacher.Telefon);
                 cmd.Parameters.AddWithValue("@aadress", teacher.Aadress);
                 cmd.Parameters.AddWithValue("@ruhm", teacher.Ruhm);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
                 try
@@ -295,14 +298,15 @@ namespace Lastelaagridb
             return 1;
         }
 
-        public static int UpdateRuhm(Ruhm ruhm)
+        public static int UpdateRuhm(Ruhm ruhm, int id)
         {
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
                 OleDbCommand cmd = new OleDbCommand();
                 cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "UPDATE student SET NimiRuhm = @nimi";
+                cmd.CommandText = "UPDATE [group] SET NimiRuhm = @nimi WHERE ID = @id";
                 cmd.Parameters.AddWithValue("@nimi", ruhm.NimiRuhm);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
                 try

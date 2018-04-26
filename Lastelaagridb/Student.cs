@@ -9,7 +9,7 @@ namespace Lastelaagridb
     {
         public int ID { get; set; }
         public String Nimi { get; set; }
-        public int Isikukood { get; set; }
+        public String Isikukood { get; set; }
         public String Kool { get; set; }
         public int Klass { get; set; }
         public String Telefon { get; set; }
