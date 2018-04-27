@@ -15,7 +15,7 @@ namespace Lastelaagridb
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
                 conn.Open();
-                string sql = "SELECT * FROM student";
+                string sql = "SELECT * FROM student, group WHERE student.Ruhm = group.ID";
                 OleDbCommand cmd = new OleDbCommand(sql, conn);
                 OleDbCommand cmdRuhm = new OleDbCommand("SELECT * FROM group", conn);
                 OleDbDataReader reader = cmd.ExecuteReader();
@@ -33,7 +33,8 @@ namespace Lastelaagridb
                         student.Klass = (int)reader[4];
                         student.Telefon = reader[5].ToString();
                         student.Aadress = reader[6].ToString();
-                        student.Ruhm = ruhm.ID;
+                        
+                        student.Ruhm = ruhm;
                         students.Add(student);
                     }
                 }
