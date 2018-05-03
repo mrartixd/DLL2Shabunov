@@ -12,8 +12,8 @@ namespace Lastelaagridb
         public String Isikukood { get; set; }
         public String Telefon { get; set; }
         public String Aadress { get; set; }
-        public int Ruhm { get; set; }
-
+        public int RuhmID { get; set; }
+        public Ruhm Ruhm { get; set; }
         public Teacher() { }
     }
 }

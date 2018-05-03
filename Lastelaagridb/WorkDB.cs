@@ -15,9 +15,9 @@ namespace Lastelaagridb
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
                 conn.Open();
-                string sql = "SELECT * FROM student, group WHERE student.Ruhm = group.ID";
+                string sql = "SELECT student.ID, Nimi, Isikukood, Kool, Klass, Telefon, Aadress, group.NimiRuhm FROM[group] INNER JOIN student ON group.ID = student.Ruhm";
                 OleDbCommand cmd = new OleDbCommand(sql, conn);
-                OleDbCommand cmdRuhm = new OleDbCommand("SELECT * FROM group", conn);
+
                 OleDbDataReader reader = cmd.ExecuteReader();
                 students = new List<Student>();
                 using (reader)
@@ -33,7 +33,7 @@ namespace Lastelaagridb
                         student.Klass = (int)reader[4];
                         student.Telefon = reader[5].ToString();
                         student.Aadress = reader[6].ToString();
-                        
+                        ruhm.NimiRuhm = reader[7].ToString();
                         student.Ruhm = ruhm;
                         students.Add(student);
                     }
@@ -73,9 +73,9 @@ namespace Lastelaagridb
             using (OleDbConnection conn = ConnectionDatabase.GetConnection())
             {
                 conn.Open();
-                string sql = "SELECT * FROM teacher";
+                string sql = "SELECT teacher.ID, Nimi, Isikukood, Telefon, Aadress, group.NimiRuhm FROM[group] INNER JOIN teacher ON group.ID = teacher.Ruhm";
                 OleDbCommand cmd = new OleDbCommand(sql, conn);
-                OleDbCommand cmdRuhm = new OleDbCommand("SELECT * FROM group", conn);
+                
                 OleDbDataReader reader = cmd.ExecuteReader();
                 teachers = new List<Teacher>();
                 using (reader)
@@ -89,7 +89,8 @@ namespace Lastelaagridb
                         teacher.Isikukood = reader[2].ToString();
                         teacher.Telefon = reader[3].ToString();
                         teacher.Aadress = reader[4].ToString();
-                        teacher.Ruhm = ruhm.ID;
+                        ruhm.NimiRuhm = reader[5].ToString();
+                        teacher.Ruhm = ruhm;
                         teachers.Add(teacher);
                     }
                 }
@@ -112,7 +113,7 @@ namespace Lastelaagridb
                 cmd.Parameters.AddWithValue("@klass", student.Klass);
                 cmd.Parameters.AddWithValue("@telefon", student.Telefon);
                 cmd.Parameters.AddWithValue("@aadress", student.Aadress);
-                cmd.Parameters.AddWithValue("@ruhm", student.Ruhm);
+                cmd.Parameters.AddWithValue("@ruhm", student.RuhmID);
                 cmd.Connection = conn;
                 conn.Open();
                 try
@@ -139,7 +140,7 @@ namespace Lastelaagridb
                 cmd.Parameters.AddWithValue("@isikukood", teacher.Isikukood);
                 cmd.Parameters.AddWithValue("@telefon", teacher.Telefon);
                 cmd.Parameters.AddWithValue("@aadress", teacher.Aadress);
-                cmd.Parameters.AddWithValue("@ruhm", teacher.Ruhm);
+                cmd.Parameters.AddWithValue("@ruhm", teacher.RuhmID);
                 cmd.Connection = conn;
                 conn.Open();
                 try
